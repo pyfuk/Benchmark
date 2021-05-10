@@ -1,10 +1,10 @@
-let arr = new Array(1000);
-arr.fill(1,0,1000);
+let arr = new Array(20000);
+arr.fill(1,0,20000);
 
 // console.log(arr);
 
 
-export default forCycleTest = {
+module.exports = forCycleTest = {
   title: 'Test For cycle',
   Function: () => {
     let res = 0;
@@ -17,7 +17,7 @@ export default forCycleTest = {
 }
 
 
-export default forEachCycleTest = {
+module.exports = forEachCycleTest = {
   title: 'Test ForEach cycle',
   Function: () => {
     let res = 0;
@@ -29,7 +29,7 @@ export default forEachCycleTest = {
 }
 
 
-export default forOfCycleTest = {
+module.exports = forOfCycleTest = {
   title: 'Test ForOf cycle',
   Function: ()=> {
     let res = 0;

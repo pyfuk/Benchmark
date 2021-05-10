@@ -38,44 +38,62 @@
 
 
 
-// const formatMemoryUsage = (data) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
-
-// const memoryData = process.memoryUsage()
-
-// const memoryUsage = {
-//                 rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
-//                 heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
-//                 heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
-//                 external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
-// }
-
-// console.log(memoryUsage)
 
 
-import testObject from '../../tests/object';
 
+
+// import testObject from '../../tests/object';
+
+
+function getMemoryInfo(){
+    const formatMemoryUsage = (data : any) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
+    
+    const memoryData = process.memoryUsage()
+    
+    const memoryUsage: Object = {
+                    rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
+                    heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
+                    heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
+                    external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
+    }
+    
+    
+    return memoryUsage;
+    
+    }
+
+
+
+const testObject = require('../../tests/object');
+
+let timer1 = setTimeout( () => {
 console.time('Cycle For');
-testObject.tests[0];
+let first = testObject.tests[0];
+first.Function();
 console.timeEnd('Cycle For');
+console.log(getMemoryInfo());
+},0)
 
-// console.time('Cycle ForEach');
 
-//   function dothat() {
-//     arr.forEach((elem) => {
-//             res = elem
-//           });
-//   return res;
-// }
-// dothat();
-// console.timeEnd('Cycle ForEach');
+let timer2 = setTimeout(() => {
+console.time('Cycle ForEach');
+let second = testObject.tests[1];
+second.Function();
+console.timeEnd('Cycle ForEach');
+console.log(getMemoryInfo());
+}, 500)
 
-// console.time('Cycle ForOF');
 
-//   function dosmth() {
-//     for (let value of arr){
-//             res = value
-//           }
-//   return res;
-// }
-// dosmth();
-// console.timeEnd('Cycle ForOF');
+let timer3 = setTimeout(() => {
+console.time('Cycle ForOF');
+let third = testObject.tests[2];
+third.Function();
+console.timeEnd('Cycle ForOF');
+console.log(getMemoryInfo());
+}, 1000)
+
+
+
+
+
+
