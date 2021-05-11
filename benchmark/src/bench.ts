@@ -1,96 +1,65 @@
-// var Benchmark = require('benchmark');
-
-// var suite = new Benchmark.Suite;
- 
-// // add tests
-// let arr = [];
-// let sum = 0;
-// for ( let i = 0; i < 10; i++ ) {
-    
-//         arr.push( Math.round( Math.random() * 100 ));
-    
-//     }
-// suite.add('forCycle#test', function() {
-//     let sum = 0;
-//   for(let i=0; i<10; i++){
-//     sum += i;
-    
-//   }
-//   return sum;
-// })
-// .add('forEachCycle#test', function() {
-    
-//     arr.forEach(function(item) {
-//         sum += item;
-//     })
-//     return sum;
-// })
-// // add listeners
-// .on('cycle', function(event) {
-//   console.log(String(event.target));
-// })
-// .on('complete', function() {
-//   console.log('Fastest is ' + this.filter('fastest').map('name'));
-// })
-// // run async
-// .run({ 'async': true });
-
-
-
-
-
-
-
-
 // import testObject from '../../tests/object';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import {getMemoryInfo, validatePath, validateObject} from './utils'
+const forCycleTest = require('../../tests/loop.js');
+const forEachCycleTest = require('../../tests/loop.js');
+const forOfCycleTest = require('../../tests/loop.js');
 
+const argv: any = yargs(hideBin(process.argv)).argv;
 
-function getMemoryInfo(){
-    const formatMemoryUsage = (data : any) => `${Math.round(data / 1024 / 1024 * 100) / 100} MB`
-    
-    const memoryData = process.memoryUsage()
-    
-    const memoryUsage: Object = {
-                    rss: `${formatMemoryUsage(memoryData.rss)} -> Resident Set Size - total memory allocated for the process execution`,
-                    heapTotal: `${formatMemoryUsage(memoryData.heapTotal)} -> total size of the allocated heap`,
-                    heapUsed: `${formatMemoryUsage(memoryData.heapUsed)} -> actual memory used during the execution`,
-                    external: `${formatMemoryUsage(memoryData.external)} -> V8 external memory`,
-    }
-    
-    
-    return memoryUsage;
-    
-    }
+const path : string = validatePath(argv.p || argv.path);
+const iterations : number = (argv.i || argv.iterations);
+const repeats : number = (argv.r || argv.repeats);
+
+const testObject = require(path);
+validateObject(testObject);
+const arrTests = testObject.tests;
 
 
 
-const testObject = require('../../tests/object');
-
-let timer1 = setTimeout( () => {
-console.time('Cycle For');
-let first = testObject.tests[0];
-first.Function();
-console.timeEnd('Cycle For');
-console.log(getMemoryInfo());
-},0)
-
-
-let timer2 = setTimeout(() => {
-console.time('Cycle ForEach');
-let second = testObject.tests[1];
-second.Function();
-console.timeEnd('Cycle ForEach');
-console.log(getMemoryInfo());
-}, 500)
-
-
-let timer3 = setTimeout(() => {
-console.time('Cycle ForOF');
-let third = testObject.tests[2];
-third.Function();
-console.timeEnd('Cycle ForOF');
-console.log(getMemoryInfo());
+function getBench() {
+    let timerId = setInterval(()=> {
+    // if(arrTests.includes(forCycleTest)){
+        let timer1 = (() => {
+            console.time('Cycle For');
+            let first = arrTests[0];
+            first.getTest();
+            console.timeEnd('Cycle For');
+            console.log(getMemoryInfo());
+            })()
+            
+            
+    // }
+    // else if(arrTests.includes(forEachCycleTest)) {
+        let timer2 = (() => {
+            console.time('Cycle ForEach');
+            let second = testObject.tests[1];
+            second.getTest();
+            console.timeEnd('Cycle ForEach');
+            console.log(getMemoryInfo());
+            })()
+    // }
+    // else if(arrTests.includes(forOfCycleTest)){
+        let timer3 = (() => {
+            console.time('Cycle ForOF');
+            let third = testObject.tests[2];
+            third.getTest();
+            console.timeEnd('Cycle ForOF');
+            console.log(getMemoryInfo());
+            })()
+            
+    // }
 }, 1000)
+setTimeout(()=> {clearInterval(timerId); console.log('stop')}, (repeats*1000));
+    
+}
+
+
+getBench();
+
+
+
 
 
 

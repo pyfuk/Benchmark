@@ -1,12 +1,12 @@
-let arr = new Array(20000);
-arr.fill(1,0,20000);
+let arr = new Array(100000);
+arr.fill(1,0,100000);
 
 // console.log(arr);
 
 
 module.exports = forCycleTest = {
-  title: 'Test For cycle',
-  Function: () => {
+  name: 'Test For cycle',
+  getTest: () => {
     let res = 0;
     
     for ( i=0 ; i<arr.length; i++){
@@ -18,8 +18,8 @@ module.exports = forCycleTest = {
 
 
 module.exports = forEachCycleTest = {
-  title: 'Test ForEach cycle',
-  Function: () => {
+  name: 'Test ForEach cycle',
+  getTest: () => {
     let res = 0;
     arr.forEach((elem) => {
       res = elem;
@@ -30,8 +30,8 @@ module.exports = forEachCycleTest = {
 
 
 module.exports = forOfCycleTest = {
-  title: 'Test ForOf cycle',
-  Function: ()=> {
+  name: 'Test ForOf cycle',
+  getTest: ()=> {
     let res = 0;
     for (let value of arr){
       res = value;
