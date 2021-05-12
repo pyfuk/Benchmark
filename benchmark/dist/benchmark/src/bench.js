@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.arrTests = exports.repeats = exports.iterations = void 0;
+const tslib_1 = require("tslib");
+const yargs_1 = tslib_1.__importDefault(require("yargs"));
+const helpers_1 = require("yargs/helpers");
+const utils_1 = require("./utils");
+const get_tests_1 = require("./get_tests");
+const argv = yargs_1.default(helpers_1.hideBin(process.argv)).argv;
+const path = utils_1.validatePath(argv.p || argv.path);
+exports.iterations = utils_1.parseAsInt(argv.i || argv.iterations);
+exports.repeats = utils_1.parseAsInt(argv.r || argv.repeats);
+const testObject = require(path);
+utils_1.validateObject(testObject);
+exports.arrTests = testObject.tests;
+get_tests_1.getFirstTestBench();
+get_tests_1.getSecondTestBench();
+get_tests_1.getThirdTestBench();

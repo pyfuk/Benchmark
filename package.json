@@ -9,6 +9,7 @@
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "tsc": "^2.0.3",
+    "tslib": "^2.2.0",
     "yargs": "^17.0.1"
   },
   "devDependencies": {
@@ -18,7 +19,7 @@
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "start": "tsc && node benchmark/dist/bench.js --path '' --iterations 10000 --repeats 3",
+    "start": "tsc && node benchmark/dist/bench.js --path '/home/alan/Desktop/Benchmark/tests/object.ts' --iterations 10000 --repeats 3",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },

@@ -29,9 +29,9 @@ function getFirstTestBench() {
     }
     utils_1.delay(500).then();
     console.log(firstTestTitle);
-    console.log("Avg work time:" + (counter / bench_1.repeats).toFixed(2) + " ms");
-    console.log("Avg memory used:" + (memoryUsage / bench_1.repeats).toFixed(2) + " MB");
-    console.log("Avg CPU used:" + (cpuChek / bench_1.repeats).toFixed(2) + " %");
+    console.log("Avg work time: " + (counter / bench_1.repeats).toFixed(2) + " ms");
+    console.log("Avg memory used: " + (memoryUsage / bench_1.repeats).toFixed(2) + " MB");
+    console.log("Avg CPU used: " + (cpuChek / bench_1.repeats).toFixed(2) + " %");
     console.log('---------------------------------------------------------------');
 }
 exports.getFirstTestBench = getFirstTestBench;

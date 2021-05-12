@@ -30,17 +30,17 @@ export function delay(ms: number) {
 
 
 
-  var os = require("os");
+  let os = require("os");
 
 export function cpuAverage() {
-  var totalIdle = 0, totalTick = 0;
-  var cpus = os.cpus();
+  let totalIdle = 0, totalTick = 0;
+  let cpus = os.cpus();
 
 
-  for(var i = 0, len = cpus.length; i < len; i++) {
+  for(let i = 0, len = cpus.length; i < len; i++) {
 
 
-    var cpu = cpus[i];
+    let cpu = cpus[i];
 
 
     for(let type in cpu.times) {
