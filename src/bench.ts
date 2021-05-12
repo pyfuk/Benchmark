@@ -1,7 +1,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import {validatePath, validateObject, parseAsInt} from './utils'
-import {getFirstTestBench, getSecondTestBench, getThirdTestBench} from './get_tests'
+import {getFirstTestBench, getSecondTestBench, getThirdTestBench} from './testCases'
 
 const argv: any = yargs(hideBin(process.argv)).argv;
 

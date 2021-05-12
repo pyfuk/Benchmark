@@ -1,12 +1,10 @@
 import {iterations, repeats, arrTests} from './bench'
 import {delay, cpuAverage} from './utils'
 
-
-
 export function getFirstTestBench(): void {
-    let counter: number = 0;
-    let memoryUsage: number = 0;
-    let cpuChek: number = 0;
+    let counterTime: number = 0;
+    let counterMemoryUsage: number = 0;
+    let counterCpu: number = 0;
     let firstTestTitle = '';
     for(let i = 0; i<repeats; i++){
         const startTime = Date.now();
@@ -21,31 +19,30 @@ export function getFirstTestBench(): void {
         
         const endTime = Date.now();
         const workTime: number = endTime - startTime;
-        counter += workTime;
+        counterTime += workTime;
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        memoryUsage += used;
+        counterMemoryUsage += used;
         let endMeasure = cpuAverage(); 
         let idleDifference: number = endMeasure.idle - startMeasure.idle;
         let totalDifference: number= endMeasure.total - startMeasure.total;
         let percentageCPU: number = 100 - ~~(100 * idleDifference / totalDifference);
-        cpuChek += percentageCPU;
+        counterCpu += percentageCPU;
         
     }
     
     delay(500).then();
-    
     console.log(firstTestTitle)
-    console.log("Avg work time: " + (counter/repeats).toFixed(2) + " ms");
-    console.log("Avg memory used: " + (memoryUsage/repeats).toFixed(2) + " MB");
-    console.log("Avg CPU used: " + (cpuChek/repeats).toFixed(2) + " %");
+    console.log("Avg work time: " + (counterTime/repeats).toFixed(2) + " ms");
+    console.log("Avg memory used: " + (counterMemoryUsage/repeats).toFixed(2) + " MB");
+    console.log("Avg CPU used: " + (counterCpu/repeats).toFixed(2) + " %");
     console.log('---------------------------------------------------------------')
 }
 
 
 export function getSecondTestBench(): void {
-    let counter: number = 0;
-    let memoryUsage: number = 0;
-    let cpuChek: number = 0;
+    let counterTime: number = 0;
+    let counterMemoryUsage: number = 0;
+    let counterCpu: number = 0;
     let secondTestTitle = '';
     for(let i = 0; i<repeats; i++){
         const startTime = Date.now();
@@ -59,28 +56,28 @@ export function getSecondTestBench(): void {
 
         const endTime = Date.now();
         const workTime: number = endTime - startTime;
-        counter += workTime;
+        counterTime += workTime;
         const used = process.memoryUsage().heapUsed / 1024 / 1024;
-        memoryUsage += used;
+        counterMemoryUsage += used;
         let endMeasure = cpuAverage(); 
         let idleDifference : number= endMeasure.idle - startMeasure.idle;
         let totalDifference : number = endMeasure.total - startMeasure.total;
         let percentageCPU: number = 100 - ~~(100 * idleDifference / totalDifference);
-        cpuChek += percentageCPU;
+        counterCpu += percentageCPU;
         }
         delay(500).then();
         console.log(secondTestTitle);
-        console.log("Avg work time: " + (counter/repeats).toFixed(2) + " ms");
-        console.log("Avg memory used: " + (memoryUsage /repeats).toFixed(2) + " MB");
-        console.log("Avg CPU used: " + (cpuChek/repeats).toFixed(2) + " %");
+        console.log("Avg work time: " + (counterTime/repeats).toFixed(2) + " ms");
+        console.log("Avg memory used: " + (counterMemoryUsage /repeats).toFixed(2) + " MB");
+        console.log("Avg CPU used: " + (counterCpu/repeats).toFixed(2) + " %");
         console.log('---------------------------------------------------------------')
     }
 
 
 export function getThirdTestBench(): void {
-        let counter: number = 0;
-        let memoryUsage: number = 0;
-        let cpuChek: number = 0;
+        let counterTime: number = 0;
+        let counterMemoryUsage: number = 0;
+        let counterCpu: number = 0;
         let thirdTestTitle = '';
         for(let i = 0; i<repeats; i++){
             const startTime = Date.now();
@@ -94,19 +91,19 @@ export function getThirdTestBench(): void {
 
             const endTime = Date.now();
             const workTime: number = endTime - startTime;
-            counter += workTime;         
+            counterTime += workTime;         
             const used = process.memoryUsage().heapUsed / 1024 / 1024;
-            memoryUsage += used;
+            counterMemoryUsage += used;
             let endMeasure = cpuAverage(); 
             let idleDifference : number = endMeasure.idle - startMeasure.idle;
             let totalDifference : number = endMeasure.total - startMeasure.total;
             let percentageCPU : number = 100 - ~~(100 * idleDifference / totalDifference);
-            cpuChek += percentageCPU;
+            counterCpu += percentageCPU;
     }
             delay(500).then();
             console.log(thirdTestTitle);                 
-            console.log("Avg work time: " + (counter/repeats).toFixed(2) + " ms");
-            console.log("Avg memory used: " + (memoryUsage /repeats).toFixed(2) + " MB");
-            console.log("Avg CPU used: " + (cpuChek/repeats).toFixed(2) + " %");
+            console.log("Avg work time: " + (counterTime/repeats).toFixed(2) + " ms");
+            console.log("Avg memory used: " + (counterMemoryUsage /repeats).toFixed(2) + " MB");
+            console.log("Avg CPU used: " + (counterCpu/repeats).toFixed(2) + " %");
             console.log('---------------------------------------------------------------')
 }

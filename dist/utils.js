@@ -1,13 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cpuAverage = exports.delay = exports.parseAsInt = exports.validateObject = exports.validatePath = void 0;
+exports.cpuAverage = exports.delay = exports.parseAsInt = exports.validateObject = exports.validateObjectfileInPath = exports.validatePath = void 0;
+const fs = require('fs');
 function validatePath(value) {
     if (typeof value == 'string') {
-        return value;
+        return validateObjectfileInPath(value);
     }
     throw 'Wrong path! Please try again';
 }
 exports.validatePath = validatePath;
+function validateObjectfileInPath(value) {
+    const path = value;
+    fs.access(path, fs.F_OK, (err) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+    });
+}
+exports.validateObjectfileInPath = validateObjectfileInPath;
 function validateObject(value) {
     if (value.hasOwnProperty('title')) {
         return value;

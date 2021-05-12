@@ -1,8 +1,22 @@
+const fs = require('fs')
+
+
+
 export function validatePath(value: string) : string {
     if(typeof value == 'string') {
-        return value;
+        return validateObjectfileInPath(value);
     } 
     throw 'Wrong path! Please try again'
+}
+
+export function validateObjectfileInPath(value:string) : any {
+  const path = value;
+  fs.access(path, fs.F_OK, (err) => {
+    if(err) {
+      console.log(err)
+      return
+    }
+  })
 }
 
 export function validateObject(value: object) : object {
