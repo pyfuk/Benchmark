@@ -1,6 +1,6 @@
 import { delay, cpuAverage } from "./utils";
 
-function setCounters(arrTests, iterations, repeats, testID) {
+function setCounters(arrTests, iterations, repeats) {
   let counterTime: number = 0;
   let counterMemoryUsage: number = 0;
   let counterCpu: number = 0;
@@ -9,7 +9,7 @@ function setCounters(arrTests, iterations, repeats, testID) {
     const startTime = Date.now();
     var startMeasure = cpuAverage();
     for (let i = 0; i <= iterations; i++) {
-      let selectTest = arrTests[testID];
+      let selectTest = arrTests;
       selectTest.getTest();
       testTitle = selectTest.name;
     }
@@ -46,14 +46,6 @@ function getLogs(
   );
 }
 
-export function getFirstTestBench(arrTests, iterations, repeats): void {
-  setCounters(arrTests, iterations, repeats, 0);
-}
-
-export function getSecondTestBench(arrTests, iterations, repeats): void {
-  setCounters(arrTests, iterations, repeats, 1);
-}
-
-export function getThirdTestBench(arrTests, iterations, repeats): void {
-  setCounters(arrTests, iterations, repeats, 2);
+export function getTestsBench(arrTests, iterations, repeats): void {
+    setCounters(arrTests, iterations, repeats);
 }
