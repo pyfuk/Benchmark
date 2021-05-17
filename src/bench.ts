@@ -5,11 +5,11 @@ import {getFirstTestBench, getSecondTestBench, getThirdTestBench} from './testCa
 
 const argv: any = yargs(hideBin(process.argv)).argv;
 
-export const path : string = validatePath(argv.p || argv.path);
+export const PATH : string = validatePath(argv.p || argv.path);
 export const iterations : number = parseAsInt(argv.i || argv.iterations);
 export const repeats : number = parseAsInt(argv.r || argv.repeats);
 
-const testObject = require(path);
+const testObject = require(PATH);
 export const arrTests = testObject.tests;
 
 getFirstTestBench();

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cpuAverage = exports.delay = exports.parseAsInt = exports.validatePath = void 0;
-let path = require('path');
+const path = require('path');
 const fs = require('fs');
-let os = require("os");
+const os = require('os');
 function validatePath(value) {
     if (typeof value !== 'string') {
         throw 'Wrong path! Please try again';

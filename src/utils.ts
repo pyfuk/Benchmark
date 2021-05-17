@@ -1,6 +1,6 @@
-let path = require('path')
+const path = require('path')
 const fs = require('fs')
-let os = require("os");
+const os = require('os');
 
 export function validatePath(value: string) : any {
     if(typeof value !== 'string') {
