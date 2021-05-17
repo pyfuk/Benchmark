@@ -1,35 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cpuAverage = exports.delay = exports.parseAsInt = exports.validateObject = exports.validateObjectfileInPath = exports.validatePath = void 0;
+exports.cpuAverage = exports.delay = exports.parseAsInt = exports.validatePath = void 0;
+let path = require('path');
 const fs = require('fs');
+let os = require("os");
 function validatePath(value) {
-    if (typeof value == 'string') {
-        return validateObjectfileInPath(value);
+    if (typeof value !== 'string') {
+        throw 'Wrong path! Please try again';
     }
-    throw 'Wrong path! Please try again';
-}
-exports.validatePath = validatePath;
-function validateObjectfileInPath(value) {
-    const path = value;
-    fs.access(path, fs.F_OK, (err) => {
+    fs.access(value, fs.F_OK, (err) => {
         if (err) {
-            console.log(err);
-            return;
+            throw "File not founded";
         }
+        else if (path.extname(value) !== '.js') {
+            throw "Wrong file format";
+        }
+        fs.readFile(value, (err, data) => {
+            if (err)
+                throw err;
+            let objectWithTests = data.toString();
+            objectWithTests = JSON.parse(objectWithTests);
+            if (objectWithTests['title'] && objectWithTests['tests']) {
+                return value;
+            }
+            throw "Its not test file";
+        });
     });
 }
-exports.validateObjectfileInPath = validateObjectfileInPath;
-function validateObject(value) {
-    if (value.hasOwnProperty('title')) {
-        return value;
-    }
-    throw 'Wrong object! This object has no tests';
-}
-exports.validateObject = validateObject;
+exports.validatePath = validatePath;
 function parseAsInt(value) {
     const parsedValue = parseInt(value);
     if (isNaN(parsedValue)) {
         throw `${value} is not a number`;
+    }
+    else if (parsedValue <= 0) {
+        throw `There can be no negative number`;
     }
     return parsedValue;
 }
@@ -40,7 +45,6 @@ function delay(ms) {
     });
 }
 exports.delay = delay;
-let os = require("os");
 function cpuAverage() {
     let totalIdle = 0, totalTick = 0;
     let cpus = os.cpus();

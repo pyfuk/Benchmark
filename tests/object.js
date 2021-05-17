@@ -5,6 +5,6 @@ const tests = require('./loop')
 
 
 module.exports = testObject = {
-    title: "Cycles tests",
+    title: 'Test object',
     tests
 }
