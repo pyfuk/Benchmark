@@ -6,21 +6,24 @@ export function validatePath(value: string) : any {
     if(typeof value !== 'string') {
         throw 'Wrong path! Please try again'
     } 
-    fs.access(value, fs.F_OK, (err) => {
-      if(err) {
-        throw "File not founded"  
-      } else if( path.extname(value) !== '.js') {
-        throw "Wrong file format"
-      } fs.readFile(value, (err, data) => {
-          if (err) throw err;
-          let objectWithTests = data.toString();
-          objectWithTests = JSON.parse(objectWithTests);
-          if(objectWithTests['title'] && objectWithTests['tests']) {
-            return value
-          } throw "Its not test file";
-      }) 
-    })
-}
+    try {
+      if (fs.existsSync(path)) {
+        if( path.extname(value) !== '.js') {
+          throw "Wrong file format"
+        } fs.readFile(value, (err, data) => {
+            if (err) throw err;
+            let objectWithTests = data.toString();
+            objectWithTests = JSON.parse(objectWithTests);
+            if(objectWithTests['title'] && objectWithTests['tests']) {
+              return value
+            } throw "Its not test file";
+        }) 
+      } throw "ERRRRRRROR"
+    } catch(err) {
+      console.error(err)
+    } 
+    }
+
 
 export function parseAsInt(value: string): number {
     const parsedValue = parseInt(value);

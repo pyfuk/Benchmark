@@ -1,7 +1,6 @@
-import {iterations, repeats, arrTests} from './bench'
 import {delay, cpuAverage} from './utils'
 
-function setCounters(testID) {
+function setCounters(arrTests, iterations, repeats, testID) {
     let counterTime: number = 0;
     let counterMemoryUsage: number = 0;
     let counterCpu: number = 0;
@@ -25,10 +24,10 @@ function setCounters(testID) {
         let percentageCPU: number = 100 - ~~(100 * idleDifference / totalDifference);
         counterCpu += percentageCPU;
         delay(500).then();
-        getLogs(testTitle, counterTime, counterMemoryUsage, counterCpu)   
+        getLogs(testTitle, counterTime, counterMemoryUsage, counterCpu, repeats)   
     }
 }
-function getLogs(testTitle, counterTime, counterMemoryUsage, counterCpu) {
+function getLogs(testTitle, counterTime, counterMemoryUsage, counterCpu, repeats) {
     console.log(testTitle)
     console.log("Avg work time: " + (counterTime/repeats).toFixed(2) + " ms");
     console.log("Avg memory used: " + (counterMemoryUsage/repeats).toFixed(2) + " MB");
@@ -36,16 +35,16 @@ function getLogs(testTitle, counterTime, counterMemoryUsage, counterCpu) {
     console.log('---------------------------------------------------------------')
 }
 
-export function getFirstTestBench(): void {
-    setCounters(0);
+export function getFirstTestBench(arrTests, iterations, repeats ): void {
+    setCounters(arrTests, iterations, repeats, 0);
 }
 
 
-export function getSecondTestBench(): void {
-    setCounters(1);
+export function getSecondTestBench(arrTests, iterations, repeats): void {
+    setCounters(arrTests, iterations, repeats, 1);
 }
 
 
-export function getThirdTestBench(): void {
-    setCounters(2);
+export function getThirdTestBench(arrTests, iterations, repeats): void {
+    setCounters(arrTests, iterations, repeats, 2);
 }

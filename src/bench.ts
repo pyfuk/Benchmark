@@ -5,16 +5,16 @@ import {getFirstTestBench, getSecondTestBench, getThirdTestBench} from './testCa
 
 const argv: any = yargs(hideBin(process.argv)).argv;
 
-export const PATH : string = validatePath(argv.p || argv.path);
-export const iterations : number = parseAsInt(argv.i || argv.iterations);
-export const repeats : number = parseAsInt(argv.r || argv.repeats);
+const PATH : string = validatePath(argv.p || argv.path);
+const iterations : number = parseAsInt(argv.i || argv.iterations);
+const repeats : number = parseAsInt(argv.r || argv.repeats);
 
 const testObject = require(PATH);
-export const arrTests = testObject.tests;
+const arrTests = testObject.tests;
 
-getFirstTestBench();
-getSecondTestBench();
-getThirdTestBench();
+getFirstTestBench(arrTests, iterations, repeats);
+getSecondTestBench(arrTests, iterations, repeats);
+getThirdTestBench(arrTests, iterations, repeats);
 
 
 
