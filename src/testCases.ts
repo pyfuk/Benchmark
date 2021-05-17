@@ -1,32 +1,46 @@
 import { delay, cpuAverage } from "./utils";
 
-function setCounters(arrTests, iterations, repeats) {
+export function getTestsBench(test, iterations, repeats) {
   let counterTime: number = 0;
   let counterMemoryUsage: number = 0;
   let counterCpu: number = 0;
   let testTitle = "";
   for (let i = 0; i < repeats; i++) {
-    const startTime = Date.now();
-    var startMeasure = cpuAverage();
+    const startMeasure = startAndEndMeasuring();
     for (let i = 0; i <= iterations; i++) {
-      let selectTest = arrTests;
-      selectTest.getTest();
-      testTitle = selectTest.name;
+        test.getTest();
+        testTitle = test.name;
     }
-    const endTime = Date.now();
-    const workTime: number = endTime - startTime;
-    counterTime += workTime;
-    const used = process.memoryUsage().heapUsed / 1024 / 1024;
-    counterMemoryUsage += used;
-    let endMeasure = cpuAverage();
-    let idleDifference: number = endMeasure.idle - startMeasure.idle;
-    let totalDifference: number = endMeasure.total - startMeasure.total;
-    let percentageCPU: number =
-      100 - ~~((100 * idleDifference) / totalDifference);
-    counterCpu += percentageCPU;
+    const endMeasure = startAndEndMeasuring();
+    counterTime += getUsedTime(endMeasure.time, startMeasure.time);
+    counterMemoryUsage += getUsedMemory();
+    counterCpu += getCPUPercentage(endMeasure, startMeasure);
     delay(500).then();
   }
   getLogs(testTitle, counterTime, counterMemoryUsage, counterCpu, repeats);
+}
+
+function getCPUPercentage(endMeasure, startMeasure ) {
+    let idleDifference: number = endMeasure.cpu.idle - startMeasure.cpu.idle;
+    let totalDifference: number = endMeasure.cpu.total - startMeasure.cpu.total;
+    let percentageCPU: number =
+      100 - ~~((100 * idleDifference) / totalDifference);
+    return percentageCPU
+}
+
+function getUsedMemory(){
+    return process.memoryUsage().heapUsed / 1024 / 1024;
+}
+
+function getUsedTime(endTime, startTime) {
+    return endTime - startTime
+}
+
+function startAndEndMeasuring() {
+    return {
+            time: Date.now(),
+            cpu: cpuAverage()
+        }
 }
 function getLogs(
   testTitle,
@@ -44,8 +58,4 @@ function getLogs(
   console.log(
     "---------------------------------------------------------------"
   );
-}
-
-export function getTestsBench(arrTests, iterations, repeats): void {
-    setCounters(arrTests, iterations, repeats);
 }
