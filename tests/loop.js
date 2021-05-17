@@ -1,5 +1,3 @@
-// import {IforCycleTest, IforEachCycleTest, IforOfCycleTest} from '../interface/interfaces'
-
 let arr = new Array(100000);
 arr.fill(1,0,100000);
 
