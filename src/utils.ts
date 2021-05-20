@@ -4,8 +4,8 @@ import {IcpuAverage, ItestObject} from "../interface/interfaces";
 import {testObject} from "./bench";
 
 export function normalizePath(pathToObject: string) : string {
-  const parsedValue = parseInt(pathToObject);
-    if (isNaN(parsedValue)) {
+  const parsedValueToNumber = parseInt(pathToObject);
+    if (isNaN(parsedValueToNumber)) {
       return pathToObject
     } throw new Error("Wrong path")
 }

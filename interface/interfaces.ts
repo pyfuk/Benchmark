@@ -14,14 +14,14 @@ export interface IcpuAverage {
 }
 
 export interface ItestObject {
-  title: string,
-  tests: ItestObject[]
+  title: string;
+  tests: ItestObject[];
 }
 
 
 export interface IsetCounters {
-  counterTime: number,
-  counterMemoryUsage: number,
-  counterCpu: number,
-  testTitle: string
+  counterTime: number;
+  counterMemoryUsage: number;
+  counterCpu: number;
+  testTitle: string;
 }
