@@ -36,3 +36,4 @@ module.exports = testObject = {
     title: 'Test object',
     tests: [forCycleTest, forEachCycleTest, forOfCycleTest]
 }
+

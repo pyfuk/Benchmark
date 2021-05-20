@@ -1,31 +1,32 @@
-import path from "path";
 import fs from "fs";
 import os from "os";
+import {IcpuAverage, ItestObject} from "../interface/interfaces";
+import {testObject} from "./bench";
 
-export function validatePath(value: string): any {
-  if (typeof value !== "string") {
-    throw "Wrong path! Please try again";
-  }
-  try {
-    if (!fs.existsSync(value)) {
+export function normalizePath(pathToObject: string) : string {
+  const parsedValue = parseInt(pathToObject);
+    if (isNaN(parsedValue)) {
+      return pathToObject
+    } throw new Error("Wrong path")
+}
+export function validatePath(pathToObject: string): string {
+    if (!fs.existsSync(pathToObject)) {
       throw new Error("Its not a file");
     }
-    if (path.extname(value) !== ".js") {
+    if (pathToObject.split('.').pop() !== "js") {
       throw new Error("Wrong file format");
     }
-    // const data = fs.readFileSync(value, {encoding: 'utf8', flag: 'r'});
-    // let objectWithTests = data.toString();
-    // objectWithTests = JSON.parse(objectWithTests);
-    // console.log(objectWithTests)
-    // if(!objectWithTests['title'] && !objectWithTests['tests']) {
-    //       throw "Its not test file";
-    // }
-  } catch (err) {
-    console.error(err);
-  }
-  return value;
+    return testObject
+  
 }
 
+export function validateObject(object:ItestObject) {
+    if (!object.title && !object.tests){
+      throw new Error("Its not an object with tests")
+    }
+    return object;
+  } 
+  
 export function parseAsInt(value: string): number {
   const parsedValue = parseInt(value);
   if (isNaN(parsedValue)) {
@@ -36,13 +37,13 @@ export function parseAsInt(value: string): number {
   return parsedValue;
 }
 
-export function delay(ms: number) {
+export function delay(ms: number) : Promise<void> {
   return new Promise((resolve, reject) => {
     setTimeout(resolve, ms);
   });
 }
 
-export function cpuAverage() {
+export function cpuAverage() : IcpuAverage {
   let totalIdle = 0,
     totalTick = 0;
   let cpus = os.cpus();

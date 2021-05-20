@@ -1,17 +1,15 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { validatePath, parseAsInt } from "./utils";
-import { getTestsBench} from "./testCases";
+import { validatePath, parseAsInt, validateObject, normalizePath } from "./utils";
+import { getBench} from "./testCases";
+import path from "path";
 
 const argv: any = yargs(hideBin(process.argv)).argv;
+const PATH: string = path.join(process.cwd(), argv.p || argv.path);
+normalizePath(PATH)
+validatePath(PATH);
+const [iterations, repeats] = [parseAsInt(argv.i || argv.iterations), parseAsInt(argv.r || argv.repeats)]
+export const testObject = require(PATH);
+validateObject(testObject)
 
-const PATH: string = validatePath(argv.p || argv.path);
-const iterations: number = parseAsInt(argv.i || argv.iterations);
-const repeats: number = parseAsInt(argv.r || argv.repeats);
-
-const testObject = require(PATH);
-const tests = testObject.tests;
-
-for(const value of tests){
-    getTestsBench(value, iterations, repeats);
-}
+getBench(testObject.tests, iterations, repeats)
